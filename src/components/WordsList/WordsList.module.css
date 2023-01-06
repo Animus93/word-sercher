@@ -1,0 +1,32 @@
+.tableСell2 {
+    text-align: center;
+};
+
+.tableСell1 {
+    min-width:fit-content;
+}
+
+.tableStr {
+    /* font-weight: bold; */
+}
+
+.tableStr:hover {
+    cursor: pointer;
+    background-color: rgb(130, 255, 255);
+}
+
+.wordsList {
+    right: 0px;
+    border: 1px solid rgb(128, 128, 128);
+    top: 0px;
+}
+table thead tr {
+    background-color: #ffffff;
+}
+
+table tbody tr:nth-child(odd){
+	background: rgb(231, 231, 247);
+}
+table tbody tr:nth-child(even){
+	background: #ffffff;
+}
