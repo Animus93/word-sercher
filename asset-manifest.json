@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/react-homework-template/static/css/main.08ed710d.css",
-    "main.js": "/react-homework-template/static/js/main.fcd5a5ba.js",
-    "index.html": "/react-homework-template/index.html",
-    "main.08ed710d.css.map": "/react-homework-template/static/css/main.08ed710d.css.map",
-    "main.fcd5a5ba.js.map": "/react-homework-template/static/js/main.fcd5a5ba.js.map"
+    "main.css": "/word-sercher/static/css/main.08ed710d.css",
+    "main.js": "/word-sercher/static/js/main.fcd5a5ba.js",
+    "index.html": "/word-sercher/index.html",
+    "main.08ed710d.css.map": "/word-sercher/static/css/main.08ed710d.css.map",
+    "main.fcd5a5ba.js.map": "/word-sercher/static/js/main.fcd5a5ba.js.map"
   },
   "entrypoints": [
     "static/css/main.08ed710d.css",
