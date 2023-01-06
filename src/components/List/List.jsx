@@ -6,6 +6,24 @@ export const List = () => {
   const phraseList = useSelector(state => state.wordList);
   const filter = useSelector(state => state.filterSourceArrayByWord);
   const objectValue = Object.keys(phraseList[0]);
+
+  const copyAll = () => {
+    const test = phraseList.filter(string => {
+      if (string[objectValue[0]].indexOf(filter) >= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .sort((a,b)=> b[objectValue[1]]-a[objectValue[1]])
+    .map(string => {
+      console.log(string[objectValue[0]])
+    return (
+        `${string[objectValue[0]]}\r\n`
+    )
+    });
+    navigator.clipboard.writeText(test)
+  }
   
   return (
     <table>
@@ -13,6 +31,9 @@ export const List = () => {
         <tr>
           <td className={styles.cell1}>
             <b>{[objectValue[0]]}</b>
+            <button 
+            onClick={copyAll}
+            className={styles.copyAllBtn}>Копировать всё</button>
           </td>
           <td>
             <b>{[objectValue[1]]}</b>
@@ -28,6 +49,7 @@ export const List = () => {
               return false;
             }
           })
+          .sort((a,b)=> b[objectValue[1]]-a[objectValue[1]])
           .map(string => {
             return (
               <tr key={nanoid()}>
@@ -35,10 +57,7 @@ export const List = () => {
                   <button
                     className={styles.copyBtn}
                     onClick={(e) => {navigator.clipboard.writeText(e.currentTarget.firstChild.data)}}
-                    // onClick={e => {
-                    //   copyText(e.currentTarget.firstChild.data);
-                    // }}
-                  >
+                    >
                     {string[objectValue[0]]}
                   <span className={styles.copyBtnTip}>Копировать</span>
                   </button>
@@ -46,7 +65,8 @@ export const List = () => {
                 <td>{string[objectValue[1]]}</td>
               </tr>
             );
-          })}
+          })
+          }
       </tbody>
     </table>
   );

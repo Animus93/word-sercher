@@ -5,6 +5,8 @@
     max-width: 550px;
     margin-left: 10px;
     padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .copyBtn {
@@ -20,7 +22,10 @@
     color: rgb(0, 0, 0);
     font-size:medium;
 }
-
+.copyAllBtn{
+    width: fit-content;
+    height: fit-content;
+}
 .copyBtnTip {
     display: none;
     /* NEW */

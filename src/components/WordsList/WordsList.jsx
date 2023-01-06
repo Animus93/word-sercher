@@ -25,6 +25,10 @@ export const WordsList = () => {
         return acc;
       }, {});
 
+      // const frequency = () => {
+
+      // }
+
     const reducedWordsToArray = Object.entries(reduceWords);
     let result = [reducedWordsToArray[0]];
     for (let i = 1; i < reducedWordsToArray.length; i += 1) {
@@ -68,6 +72,9 @@ export const WordsList = () => {
                 <td className={styles.tableСell2}>
                   <b>Повторений</b>
                 </td>
+                <td className={styles.tableСell2}>
+                  <b>Частота</b>
+                </td>
               </tr>
             </thead>
             <tbody>
@@ -85,6 +92,7 @@ export const WordsList = () => {
                       >
                         <td className={styles.tableСell1}>{item[0]}</td>
                         <td className={styles.tableСell2}>{item[1]}</td>
+                        <td className={styles.tableСell2}>-</td>
                       </tr>
                     )}
                     return <></>;
