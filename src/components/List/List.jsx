@@ -17,7 +17,6 @@ export const List = () => {
     })
     .sort((a,b)=> b[objectValue[1]]-a[objectValue[1]])
     .map(string => {
-      console.log(string[objectValue[0]])
     return (
         `${string[objectValue[0]]}\r\n`
     )
