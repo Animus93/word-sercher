@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/word-sercher/static/css/main.08ed710d.css",
-    "main.js": "/word-sercher/static/js/main.fcd5a5ba.js",
+    "main.css": "/word-sercher/static/css/main.79bf658d.css",
+    "main.js": "/word-sercher/static/js/main.d0e29a82.js",
     "index.html": "/word-sercher/index.html",
-    "main.08ed710d.css.map": "/word-sercher/static/css/main.08ed710d.css.map",
-    "main.fcd5a5ba.js.map": "/word-sercher/static/js/main.fcd5a5ba.js.map"
+    "main.79bf658d.css.map": "/word-sercher/static/css/main.79bf658d.css.map",
+    "main.d0e29a82.js.map": "/word-sercher/static/js/main.d0e29a82.js.map"
   },
   "entrypoints": [
-    "static/css/main.08ed710d.css",
-    "static/js/main.fcd5a5ba.js"
+    "static/css/main.79bf658d.css",
+    "static/js/main.d0e29a82.js"
   ]
 }
