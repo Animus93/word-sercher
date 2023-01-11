@@ -6,11 +6,11 @@ export const filterSourceArrayByWordSlice = createSlice({
   name: 'wordList',
   initialState,
   reducers: {
-    filterSource: (_, action) => {
+    filterSourceArrayByWord: (_, action) => {
       return action.payload;
     },
   },
 });
 
-export const {filterSource} = filterSourceArrayByWordSlice.actions;
+export const {filterSourceArrayByWord} = filterSourceArrayByWordSlice.actions;
 export default filterSourceArrayByWordSlice.reducer;

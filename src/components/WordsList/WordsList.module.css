@@ -1,3 +1,7 @@
+.container {
+    margin-right: 50px;
+    min-width: 200px;
+}
 .tableСell2 {
     text-align: center;
 };

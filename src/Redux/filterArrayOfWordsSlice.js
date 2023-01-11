@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-let initialState = '';
+const initialState = '';
 
 export const filterArrayOfWordsSlice = createSlice({
     name: 'wordList',
