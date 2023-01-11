@@ -8,9 +8,8 @@ export const listParser = (phraseList, word) => {
     return phraseList
     .filter(string => {
       if(word){
-        if (word.length === 1 && cyrillicToTranslit.transform(string[objectValue[0]]).match(new RegExp(`\\b${cyrillicToTranslit.transform(word)}\\b`)) ||
-        word.length > 1 && cyrillicToTranslit.transform(string[objectValue[0]]).match(new RegExp(`\\b${cyrillicToTranslit.transform(word)}`))) {
-          // if (cyrillicToTranslit.transform(string[objectValue[0]]).match(new RegExp(`\\b${cyrillicToTranslit.transform(word)}\\b`))) {
+        if ((word.length === 1 && cyrillicToTranslit.transform(string[objectValue[0]]).match(new RegExp(`\\b${cyrillicToTranslit.transform(word)}\\b`))) ||
+        (word.length > 1 && cyrillicToTranslit.transform(string[objectValue[0]]).match(new RegExp(`\\b${cyrillicToTranslit.transform(word)}`)))) {
           return true;
         }
           return false;

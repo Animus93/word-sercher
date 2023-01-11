@@ -6,7 +6,6 @@ import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
 import styles from './List.module.css';
 
 export const List = () => {
-  const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const phraseList = useSelector(state => state.wordList);
   const filter = useSelector(state => state.filterSourceArrayByWord);

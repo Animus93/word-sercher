@@ -91,6 +91,7 @@ export const WordsList = () => {
             </tr>
           );
         }
+        return <></>
       });
   };
 
