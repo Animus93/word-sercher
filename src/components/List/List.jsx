@@ -1,6 +1,5 @@
 import {listParser} from 'api/listParser';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
 import styles from './List.module.css';
