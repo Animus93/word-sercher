@@ -1,6 +1,20 @@
 .container {
     margin-right: 50px;
     min-width: 200px;
+    width: fit-content;
+    max-height: 88vh;
+    overflow-y: auto;
+}
+.tableСell0 {
+    /* display: flex; */
+    text-align: center;
+}
+.chekBox {
+    background-color: rgb(0, 17, 255);
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 30px;
 }
 .tableСell2 {
     text-align: center;

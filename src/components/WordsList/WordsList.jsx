@@ -2,114 +2,121 @@ import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import styles from './WordsList.module.css';
 import { filterSourceArrayByWord } from 'Redux/filterSourceArrayByWordSlice';
-import {listEqual} from 'api/listParser';
-import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
+import Snowball from 'snowball';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export const WordsList = () => {
+  const [resultArrayOfWords, setResultArrayOfWords] = useState([]);
   const dispatch = useDispatch();
-  const phraseList = useSelector(state => state.wordList);
+  const list = useSelector(state => state.wordList);
+  const objectValue = Object.keys(list[0]);
   const filter = useSelector(state => state.filterArrayOfWords);
 
-  const parse = () => {
-    const wordsPrase = Object.entries(
-      phraseList
-        .map(string => Object.values(string)[0])
-        .join(' ')
-        .split(' ')
-        .reduce((acc, word) => {
-          if (acc[word]) {
-            return acc;
-          } else {
-            acc[word] = frequency(word);
-          }
-          return acc;
-        }, {})
-    );
-    return removeRepetitions(wordsPrase);
-  };
+  useEffect(() => {
+    const wordsWithoutFrequency = list
+      .map(string => Object.values(string)[0])
+      .join(' ')
+      .split(' ');
 
-  const frequency = word => {
-    if (Object.keys(phraseList[0])[1]) {
-      return listEqual(phraseList, word)
-        .map(string => string[Object.keys(phraseList[0])[1]])
-        .reduce((acc, value) => {
-          return (acc += value);
-        }, 0);
-    }
-    return 0;
-  };
+    const wordsWithRootAsKey = wordsWithoutFrequency.map(word => {
+      const stremmer = new Snowball('Russian');
+      stremmer.setCurrent(word);
+      stremmer.stem();
+      const root = stremmer.getCurrent();
+      return { id: nanoid(), root, words: [word], frequency: 0 };
+    });
 
-  const removeRepetitions = wordsPrase => {
-    let result = [wordsPrase[0]];
+    const uniqueWords = [];
 
-    for (let i = 0; i < wordsPrase.length; i += 1) {
-      for (let j = 0; j < result.length || 1; j += 1) {
-        if (
-          wordsPrase[i][0] === result[j][0] ||
-          (wordsPrase[i][0].length > 4 &&
-            result[j][0].length > 4 &&
-            wordsPrase[i][0].substring(0, 4) === result[j][0].substring(0, 4))
-        ) {
-          console.log(result[j][0], '+', wordsPrase[i][1]);
-          result[j][1] += wordsPrase[i][1];
-          break;
-        } else if (
-          (j === result.length - 1 && wordsPrase[i][0] !== result[j][0]) ||
-          (j === result.length - 1 &&
-            wordsPrase[i][0].length > 4 &&
-            result[j][0].length > 4 &&
-            wordsPrase[i][0].substring(0, 4) !== result[j][0].substring(0, 4))
-        ) {
-          console.log('push', wordsPrase[i]);
-          result.push(wordsPrase[i]);
-          break;
-        }
+    for (let obj of wordsWithRootAsKey) {
+      const foundObj = uniqueWords.find(o => o.root === obj.root);
+      if (foundObj) {
+        foundObj.words.push(...obj.words);
+      } else {
+        uniqueWords.push(obj);
       }
     }
-    return render(result);
-  };
 
-  const render = result => {
-    return result
-      .sort((a, b) => b[1] - a[1])
-      .map(item => {
-        if (item[0].includes(filter.toLocaleLowerCase())) {
-          return (
-            <tr
-              onClick={() => {
-                item[0].length > 4
-                  ? dispatch(filterParsedListArray('')) &&
-                    dispatch(filterSourceArrayByWord(item[0].substring(0, 4)))
-                  : dispatch(filterParsedListArray('')) &&
-                    dispatch(filterSourceArrayByWord(item[0]));
-              }}
-              className={styles.tableStr}
-              key={nanoid()}
-            >
-              <td className={styles.tableСell1}>{item[0]}</td>
-              <td className={styles.tableСell2}>{item[1]}</td>
-            </tr>
+    uniqueWords.forEach(obj => {
+      obj.words = [...new Set(obj.words)].sort((a, b) => a.length - b.length);
+    });
+
+    uniqueWords.forEach(obj => {
+      return obj.words.forEach(word => {
+        list.forEach(string => {
+          let strToObj = new Set(
+            string[objectValue[0]].split(/[^\u0400-\u04ff]+/)
           );
-        }
-        return <></>
+          if (
+            Boolean(
+              strToObj.has(word) ||
+                string[objectValue[0]].match(new RegExp(`\\b${word}\\b`))
+            )
+          ) {
+            return (obj.frequency += string[objectValue[1]]);
+          }
+        });
       });
+    });
+
+    uniqueWords.sort((a, b) => b.frequency - a.frequency);
+
+    return setResultArrayOfWords(uniqueWords);
+    // eslint-disable-next-line
+  }, [list]);
+
+  const render = () => {
+    return resultArrayOfWords.map(item => {
+      if (
+        JSON.stringify(item.words)
+          .toLocaleLowerCase()
+          .includes(filter.toLocaleLowerCase())
+      ) {
+        return (
+          <tr
+            key={item.id}
+            className={styles.tableStr}
+            onClick={() => {
+              dispatch(filterSourceArrayByWord(item.words));
+            }}
+          >
+            <td className={styles.tableСell0}>
+              <input
+                className={styles.chekBox}
+                type="checkbox"
+                onChange={console.log}
+              />
+            </td>
+            <td className={styles.tableСell1}>{item.words[0]}</td>
+            <td className={styles.tableСell2}>{item.frequency}</td>
+          </tr>
+        );
+      }
+      return <></>;
+    });
   };
 
   return (
-    <div className={styles.container}>
-      <table>
-        <thead>
-          <tr>
-            <td className={styles.tableСell1}>
-              <b>Слово</b>
-            </td>
-            <td className={styles.tableСell2}>
-              <b>Частота</b>
-            </td>
-          </tr>
-        </thead>
-        <tbody>{parse()}</tbody>
-      </table>
-    </div>
+    <>
+      <div className={styles.container}>
+        <table>
+          <thead>
+            <tr>
+              <td className={styles.tableСell0}>
+                <b>✓</b>
+              </td>
+              <td className={styles.tableСell1}>
+                <b>Слово</b>
+              </td>
+              <td className={styles.tableСell2}>
+                <b>Частота</b>
+              </td>
+            </tr>
+          </thead>
+          {resultArrayOfWords.length > 0 && <tbody>{render()}</tbody>}
+        </table>
+      </div>
+    </>
   );
 };

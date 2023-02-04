@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { filterArrayOfWords } from 'Redux/filterArrayOfWordsSlice';
+import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
+import { filterSourceArrayByWord } from 'Redux/filterSourceArrayByWordSlice';
 import { addArray } from 'Redux/wordListSlice';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import { List } from '../List/List';
 import { WordsList } from '../WordsList/WordsList';
-import styles from './App.module.css'
+import styles from './App.module.css';
 
 export const App = () => {
   const wordList = useSelector(state => state.wordList);
@@ -28,29 +30,49 @@ export const App = () => {
 
   return (
     <div className={styles.container}>
-      <input
-        type="file"
-        id="fileUploader"
-        name="fileUploader"
-        accept=".xls, .xlsx"
-        onChange={handleFile}
-      />
       {wordList.length <= 0 ? (
         <>
+          <input
+            type="file"
+            id="fileUploader"
+            name="fileUploader"
+            accept=".xls, .xlsx"
+            onChange={handleFile}
+          />
           <h1>Heт Данных загрузите файл формата xlsx или xls</h1>
         </>
       ) : (
         <>
-        <form>
-        <input 
-        type="text"
-        onChange={(e)=>{dispatch(filterArrayOfWords(e.currentTarget.value))}}
-        placeholder='Фильтр' />
-      </form>
-        <div className={styles.content}>
-          <div className={styles.WordsList}><WordsList/></div>
-          {filtredList.length > 0 && <List/>}
-        </div>
+          <div className={styles.buttons}>
+            {/* <button className={styles.phrasesBtn} >
+              {' '}
+              ✓ фразы
+            </button> */}
+            <button className={styles.closeBtn} onClick={() => {
+              dispatch(addArray(''));
+              dispatch(filterArrayOfWords(''));
+              dispatch(filterSourceArrayByWord(''));
+              dispatch(filterParsedListArray(''));
+            }}>
+              {' '}
+              Закрыть
+            </button>
+          </div>
+          <form>
+            <input
+              type="text"
+              onChange={e => {
+                dispatch(filterArrayOfWords(e.currentTarget.value));
+              }}
+              placeholder="Фильтр"
+            />
+          </form>
+          <div className={styles.content}>
+            <div className={styles.WordsList}>
+              <WordsList />
+            </div>
+            {filtredList.length > 0 && <List />}
+          </div>
         </>
       )}
     </div>

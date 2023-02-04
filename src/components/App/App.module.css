@@ -25,3 +25,28 @@ input {
     /* margin-right: 5vw; */
     margin-left: 10px;
 }
+
+.buttons {
+    display: flex;
+}
+.phrasesBtn {
+    height: 25px;
+    min-width: 100px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.closeBtn {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 25px;
+    min-width: 100px;
+    width: fit-content;
+}
+
+.closeBtn:hover {
+    font-weight: bold;
+    background-color: rgb(248, 175, 175);
+}
