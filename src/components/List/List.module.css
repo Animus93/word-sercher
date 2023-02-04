@@ -1,18 +1,8 @@
 .container {
-/* display: flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: flex-start; */
     margin-top: -13px;
     width: fit-content;
     max-height: 88vh;
     overflow-y: auto;
-    scrollbar-color: rgb(0, 255, 0);
-}
-
-.input {
-margin-bottom: 10px;
-margin-right: 10px;
 }
 .cell1 {
     width: 50vw;
@@ -32,7 +22,6 @@ margin-right: 10px;
     width: 100%;
     margin-right: 10px;
     border: none;
-    /* border-radius: 15px; */
     background:none;
     color: rgb(0, 0, 0);
     font-size:medium;
