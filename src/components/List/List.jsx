@@ -33,9 +33,11 @@ export const List = () => {
         ) {
           return string[objectValue[0]];
         }
+        return <></>
       });
     }).flat().sort((a,b)=> b[objectValue[1]] - a[objectValue[1]])
     setFilredPhrase(result);
+    // eslint-disable-next-line
   }, [keyWords]);
 
   return (
@@ -91,6 +93,7 @@ export const List = () => {
                   </tr>
                 );
               }
+              return <></>
             })}
         </tbody>
       </table>
