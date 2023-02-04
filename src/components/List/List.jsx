@@ -1,11 +1,9 @@
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
+import { useSelector } from 'react-redux';
 import styles from './List.module.css';
 
 export const List = () => {
-  const dispatch = useDispatch();
   const [filtredPhrase, setFilredPhrase] = useState([]);
   const list = useSelector(state => state.wordList);
   const keyWords = useSelector(state => state.filterSourceArrayByWord);
