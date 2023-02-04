@@ -1,11 +1,9 @@
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
+import { useSelector } from 'react-redux';
 import styles from './List.module.css';
 
 export const List = () => {
-  const dispatch = useDispatch();
   const [filtredPhrase, setFilredPhrase] = useState([]);
   const list = useSelector(state => state.wordList);
   const keyWords = useSelector(state => state.filterSourceArrayByWord);
@@ -21,6 +19,7 @@ export const List = () => {
 
   useEffect(() => {
     const result = keyWords.map(word => {
+      // eslint-disable-next-line
       return list.filter(string => {
         let strToObj = new Set(
           string[objectValue[0]].split(/[^\u0400-\u04ff]+/)
@@ -33,24 +32,15 @@ export const List = () => {
         ) {
           return string[objectValue[0]];
         }
-        return
+        return null
       });
     }).flat().sort((a,b)=> b[objectValue[1]] - a[objectValue[1]])
     setFilredPhrase(result);
+    // eslint-disable-next-line
   }, [keyWords]);
 
   return (
     <div className={styles.container}>
-      {/* <input
-        type="text"
-        id="Listfilter"
-        value={inputFilter}
-        className={styles.input}
-        name="Listfilter"
-        onChange={e => {
-          dispatch(filterParsedListArray(e.currentTarget.value));
-        }}
-      /> */}
       <table>
         <thead>
           <tr>
@@ -92,6 +82,7 @@ export const List = () => {
                   </tr>
                 );
               }
+              return null
             })}
         </tbody>
       </table>
