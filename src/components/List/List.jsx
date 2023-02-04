@@ -42,17 +42,8 @@ export const List = () => {
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        id="Listfilter"
-        value={inputFilter}
-        className={styles.input}
-        name="Listfilter"
-        onChange={e => {
-          dispatch(filterParsedListArray(e.currentTarget.value));
-        }}
-      />
-      <table>
+
+      <table className={styles.List}>
         <thead>
           <tr>
             <td className={styles.cell1}>

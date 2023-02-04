@@ -1,17 +1,31 @@
 .container {
     display: flex;
     justify-content: flex-start;
-    /* align-items: flex-start; */
+    align-items: flex-start;
     flex-direction: column;
     background-color: rgb(190, 190, 190);
     width: 98vw;
     min-height: 98vh;
     /* align-items: flex-start; */
+}
+.head {
+    display: flex;
 
 }
+.head .input{
+    margin-left: 110px;
+}
+
+.listContent{
+    margin-top: 10px;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
 .content {
     margin-top: 10px;
     display: flex;
+    flex-direction: row;
     /* justify-content: center; */
     /* justify-content: space-around; */
     /* align-items: flex-start; */
@@ -20,6 +34,7 @@ input {
     margin-top: 10px;
     margin-left: 10px;
     font-weight: bold;
+    /* display: block; */
 }
 .WordsList {
     /* margin-right: 5vw; */

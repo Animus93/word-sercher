@@ -48,30 +48,49 @@ export const App = () => {
               {' '}
               ✓ фразы
             </button> */}
-            <button className={styles.closeBtn} onClick={() => {
-              dispatch(addArray(''));
-              dispatch(filterArrayOfWords(''));
-              dispatch(filterSourceArrayByWord(''));
-              dispatch(filterParsedListArray(''));
-            }}>
+          </div>
+          <div className={styles.head}>
+            <form>
+              <input
+                type="text"
+                onChange={e => {
+                  dispatch(filterArrayOfWords(e.currentTarget.value));
+                }}
+                placeholder="Фильтр"
+              />
+            </form>
+            <input
+              type="text"
+              id="Listfilter"
+              // value={inputFilter}
+              className={styles.input}
+              name="Listfilter"
+              onChange={e => {
+                dispatch(filterParsedListArray(e.currentTarget.value));
+              }}
+            />
+            <button
+              className={styles.closeBtn}
+              onClick={() => {
+                dispatch(addArray(''));
+                dispatch(filterArrayOfWords(''));
+                dispatch(filterSourceArrayByWord(''));
+                dispatch(filterParsedListArray(''));
+              }}
+            >
               {' '}
               Закрыть
             </button>
           </div>
-          <form>
-            <input
-              type="text"
-              onChange={e => {
-                dispatch(filterArrayOfWords(e.currentTarget.value));
-              }}
-              placeholder="Фильтр"
-            />
-          </form>
           <div className={styles.content}>
             <div className={styles.WordsList}>
               <WordsList />
             </div>
-            {filtredList.length > 0 && <List />}
+            {filtredList.length > 0 && (
+              <div className={styles.listContent}>
+                <List />
+              </div>
+            )}
           </div>
         </>
       )}
