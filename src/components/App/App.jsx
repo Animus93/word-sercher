@@ -12,7 +12,8 @@ export const App = () => {
   const wordList = useSelector(state => state.wordList);
   const filtredList = useSelector(state => state.filterSourceArrayByWord);
   const dispatch = useDispatch();
-
+  const inputListFilter = useSelector(state => state.filterParsedListArray)
+  const inputWordsFilter = useSelector(state => state.filterArrayOfWords)
   async function handleFile(e) {
     const files = e.target.files;
     const f = files[0];
@@ -53,6 +54,7 @@ export const App = () => {
             <form>
               <input
                 type="text"
+                value={inputWordsFilter}
                 onChange={e => {
                   dispatch(filterArrayOfWords(e.currentTarget.value));
                 }}
@@ -62,7 +64,7 @@ export const App = () => {
             <input
               type="text"
               id="Listfilter"
-              // value={inputFilter}
+              value={inputListFilter}
               className={styles.input}
               name="Listfilter"
               onChange={e => {
