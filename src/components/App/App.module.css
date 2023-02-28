@@ -12,12 +12,8 @@
     display: flex;
 
 }
-.head .input{
-    margin-left: 130px;
-}
-
 .listContent{
-    margin-top: 10px;
+    /* margin-top: -15px; */
     /* display: flex; */
     /* flex-direction: column; */
 }
@@ -30,11 +26,11 @@
     /* justify-content: space-around; */
     /* align-items: flex-start; */
 }
-input {
-    margin-top: 10px;
+.inputList {
+    margin-top: -30px;
     margin-left: 10px;
     font-weight: bold;
-    /* display: block; */
+    display: block;
 }
 .WordsList {
     /* margin-right: 5vw; */
@@ -54,11 +50,12 @@ input {
 .closeBtn {
     cursor: pointer;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 15px;
     height: 25px;
     min-width: 100px;
     width: fit-content;
+    background-color: rgb(245, 140, 140);
 }
 
 .closeBtn:hover {

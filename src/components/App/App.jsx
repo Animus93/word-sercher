@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { filterArrayOfWords } from 'Redux/filterArrayOfWordsSlice';
 import { filterParsedListArray } from 'Redux/filterParsedListArraySlice';
-import { filterSourceArrayByWord } from 'Redux/filterSourceArrayByWordSlice';
+import { listofPhrasesIncludeWord } from 'Redux/listofPhrasesIncludeWordSlice';
 import { addArray } from 'Redux/wordListSlice';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import { List } from '../List/List';
@@ -9,11 +9,13 @@ import { WordsList } from '../WordsList/WordsList';
 import styles from './App.module.css';
 
 export const App = () => {
-  const wordList = useSelector(state => state.wordList);
-  const filtredList = useSelector(state => state.filterSourceArrayByWord);
   const dispatch = useDispatch();
-  const inputListFilter = useSelector(state => state.filterParsedListArray)
-  const inputWordsFilter = useSelector(state => state.filterArrayOfWords)
+  const wordList = useSelector(state => state.wordList);
+  const listofPhrases = useSelector(
+    state => state.listofPhrasesIncludeWord
+  );
+  const inputListFilter = useSelector(state => state.filterParsedListArray);
+  const inputWordsFilter = useSelector(state => state.filterArrayOfWords);
   async function handleFile(e) {
     const files = e.target.files;
     const f = files[0];
@@ -45,10 +47,7 @@ export const App = () => {
       ) : (
         <>
           <div className={styles.buttons}>
-            {/* <button className={styles.phrasesBtn} >
-              {' '}
-              ✓ фразы
-            </button> */}
+            <button className={styles.phrasesBtn}> ✓ фразы</button>
           </div>
           <div className={styles.head}>
             <form>
@@ -61,7 +60,7 @@ export const App = () => {
                 placeholder="Фильтр"
               />
             </form>
-            <input
+            {/* <input
               type="text"
               id="Listfilter"
               value={inputListFilter}
@@ -70,13 +69,13 @@ export const App = () => {
               onChange={e => {
                 dispatch(filterParsedListArray(e.currentTarget.value));
               }}
-            />
+            /> */}
             <button
               className={styles.closeBtn}
               onClick={() => {
                 dispatch(addArray(''));
                 dispatch(filterArrayOfWords(''));
-                dispatch(filterSourceArrayByWord(''));
+                dispatch(listofPhrasesIncludeWord(''));
                 dispatch(filterParsedListArray(''));
               }}
             >
@@ -88,8 +87,18 @@ export const App = () => {
             <div className={styles.WordsList}>
               <WordsList />
             </div>
-            {filtredList.length > 0 && (
+            {listofPhrases.length && (
               <div className={styles.listContent}>
+                 <input
+              type="text"
+              id="Listfilter"
+              value={inputListFilter}
+              className={styles.inputList}
+              name="Listfilter"
+              onChange={e => {
+                dispatch(filterParsedListArray(e.currentTarget.value));
+              }}
+            />
                 <List />
               </div>
             )}

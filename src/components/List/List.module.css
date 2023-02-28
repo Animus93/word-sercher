@@ -1,18 +1,24 @@
 .container {
     display: flex;
-    margin-top: -13px;
+    margin-top: 10px;
     width: fit-content;
     max-height: 88vh;
     overflow-y: auto;
 }
+.tableBody {
+    position: relative;
+    overflow-y: auto;
+}
 .cell1 {
-    width: 50vw;
     min-width: fit-content;
     max-width: 550px;
     margin-left: 10px;
     padding-right: 10px;
     display: flex;
     justify-content: space-between;
+}
+.headCell {
+    min-width: fit-content;
 }
 
 .copyBtn {

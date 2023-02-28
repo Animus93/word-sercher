@@ -1,43 +1,24 @@
 import { nanoid } from 'nanoid';
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './List.module.css';
 
 export const List = () => {
-  const [filtredPhrase, setFilredPhrase] = useState([]);
   const list = useSelector(state => state.wordList);
-  const keyWords = useSelector(state => state.filterSourceArrayByWord);
+  const listofPhrasesIncludeWord = useSelector(
+    state => state.listofPhrasesIncludeWord
+  );
   const inputFilter = useSelector(state => state.filterParsedListArray);
   const objectValue = Object.keys(list[0]);
 
-  const copyAll = () => {
-    const parsedList = filtredPhrase.map(string => {
-      return `${string[objectValue[0]]}\r\n`;
-    });
-    navigator.clipboard.writeText(parsedList);
-  };
 
-  useEffect(() => {
-    const result = keyWords.map(word => {
-      // eslint-disable-next-line
-      return list.filter(string => {
-        let strToObj = new Set(
-          string[objectValue[0]].split(/[^\u0400-\u04ff]+/)
-        );
-        if (
-          Boolean(
-            strToObj.has(word) ||
-              string[objectValue[0]].match(new RegExp(`\\b${word}\\b`))
-          )
-        ) {
-          return string[objectValue[0]];
-        }
-        return null
-      });
-    }).flat().sort((a,b)=> b[objectValue[1]] - a[objectValue[1]])
-    setFilredPhrase(result);
-    // eslint-disable-next-line
-  }, [keyWords]);
+  const copyAll = () => {
+    const phrases = listofPhrasesIncludeWord.filter(string => {
+     return JSON.stringify(string[objectValue[0]])
+        .toLocaleLowerCase()
+        .includes(inputFilter.toLocaleLowerCase())
+    }).map(string => `${string[objectValue[0]]}\r\n`);
+    navigator.clipboard.writeText(phrases);
+  };
 
   return (
     <div className={styles.container}>
@@ -50,14 +31,20 @@ export const List = () => {
                 copy all
               </button>
             </td>
-            <td>
-              <b>{[objectValue[1]]}</b>
+            <td className={styles.headCell}>
+              {objectValue[1] && <b>{[objectValue[1]]}</b>}
+            </td>
+            <td className={styles.headCell}>
+              {objectValue[2] && <b>{[objectValue[2]]}</b>}
+            </td>
+            <td className={styles.headCell}>
+              {objectValue[3] && <b>{[objectValue[3]]}</b>}
             </td>
           </tr>
         </thead>
-        <tbody>
-          {filtredPhrase.length > 0 &&
-            filtredPhrase.map(string => {
+        <tbody className={styles.tableBody}>
+          {listofPhrasesIncludeWord.length > 0 &&
+            listofPhrasesIncludeWord.map(string => {
               if (
                 JSON.stringify(string[objectValue[0]])
                   .toLocaleLowerCase()
@@ -78,11 +65,19 @@ export const List = () => {
                         <span className={styles.copyBtnTip}>copy</span>
                       </button>
                     </td>
-                    <td>{string[objectValue[1]]}</td>
+                    {!isNaN(string[objectValue[1]]) && (
+                      <td>{string[objectValue[1]]}</td>
+                    )}
+                    {!isNaN(string[objectValue[2]]) && (
+                      <td>{string[objectValue[2]]}</td>
+                    )}
+                    {!isNaN(string[objectValue[3]]) && (
+                      <td>{string[objectValue[3]]}</td>
+                    )}
                   </tr>
                 );
               }
-              return null
+              return;
             })}
         </tbody>
       </table>

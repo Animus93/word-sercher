@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import filterArrayOfWordsSlice from './filterArrayOfWordsSlice';
 import filterParsedListArraySlice from './filterParsedListArraySlice';
-import filterSourceArrayByWordSlice from './filterSourceArrayByWordSlice';
+import listofPhrasesIncludeWordSlice from './listofPhrasesIncludeWordSlice';
 import wordListSlice from './wordListSlice';
 import {
   persistStore,
@@ -22,7 +22,7 @@ const presistConfig = {
 
 const rootReducer = combineReducers({
   wordList: wordListSlice,
-  filterSourceArrayByWord: filterSourceArrayByWordSlice,
+  listofPhrasesIncludeWord: listofPhrasesIncludeWordSlice,
   filterArrayOfWords: filterArrayOfWordsSlice,
   filterParsedListArray: filterParsedListArraySlice,
 })
