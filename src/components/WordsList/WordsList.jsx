@@ -14,54 +14,6 @@ export const WordsList = () => {
   const filter = useSelector(state => state.filterArrayOfWords);
   const stremmer = new Snowball('Russian');
 
-  // useEffect(() => {
-  //   const wordsWithoutFrequency = list
-  //     .map(string => Object.values(string)[0])
-  //     .join(' ')
-  //     .split(' ');
-  //   const wordsWithRootAsKey = wordsWithoutFrequency.map(word => {
-  //     stremmer.setCurrent(word);
-  //     stremmer.stem();
-  //     const root = stremmer.getCurrent();
-  //     return { id: nanoid(), root, words: [word], frequency: 0 };
-  //   });
-  //   const uniqueWords = [];
-
-  //   for (let obj of wordsWithRootAsKey) {
-  //     const foundObj = uniqueWords.find(o => o.root === obj.root);
-  //     if (foundObj) {
-  //       foundObj.words.push(...obj.words);
-  //     } else {
-  //       uniqueWords.push(obj);
-  //     }
-  //   }
-  //   uniqueWords.forEach(obj => {
-  //     obj.words = [...new Set(obj.words)].sort((a, b) => a.length - b.length);
-  //   });
-  //   uniqueWords.forEach(obj => {
-  //     return obj.words.forEach(word => {
-  //       list.forEach(string => {
-  //         let strToObj = new Set(
-  //           string[objectValue[0]].split(/[^\u0400-\u04ff]+/)
-  //         );
-  //         if (
-  //           Boolean(
-  //             strToObj.has(word) ||
-  //               string[objectValue[0]].match(new RegExp(`\\b${word}\\b`))
-  //           )
-  //         ) {
-  //           return (obj.frequency += string[objectValue[1]]);
-  //         }
-  //       });
-  //     });
-  //   });
-
-  //   uniqueWords.sort((a, b) => b.frequency - a.frequency);
-
-  //   return setResultArrayOfWords(uniqueWords);
-  //   // eslint-disable-next-line
-  // }, [list]);
-
   //Перебирается полученный массив объектов из XLSX файла, добавляется поле root (корень слова получается
   //при помощи библиотеки "snowball", добавляется id, изменяется тип первых полей объектов из String в Array
   // (необходимо для дальнейших манипуляций) )
@@ -144,6 +96,7 @@ export const WordsList = () => {
       })
     })
     setResultArrayOfWords(uniqueWordsNEW)
+    // eslint-disable-next-line
   },[list])
   //
 
@@ -177,7 +130,7 @@ export const WordsList = () => {
           </tr>
         );
       }
-      return;
+      return <></>;
     });
   };
 

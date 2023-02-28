@@ -77,7 +77,7 @@ export const List = () => {
                   </tr>
                 );
               }
-              return;
+              return <></>;
             })}
         </tbody>
       </table>
