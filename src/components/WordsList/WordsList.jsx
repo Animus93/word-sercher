@@ -18,7 +18,7 @@ export const WordsList = () => {
   //при помощи библиотеки "snowball", добавляется id, изменяется тип первых полей объектов из String в Array
   // (необходимо для дальнейших манипуляций) )
 
-  useEffect(()=>{
+  useEffect(() => {
     const wordsWithRootAsKeyNEW = list
       .map(obj => {
         const string = Object.values(obj)[0];
@@ -37,7 +37,7 @@ export const WordsList = () => {
         return result;
       })
       .flat();
-  
+
     //Сбрасываются показания всех полей с числовым показателем "Частота вхождения" если таковые есть
     wordsWithRootAsKeyNEW.forEach(object => {
       return (
@@ -46,64 +46,67 @@ export const WordsList = () => {
         object[objectValue[3]] ? (object[objectValue[3]] = 0) : null
       );
     });
-  
+
     const uniqueWordsNEW = [];
-  // добволяются солова соответствующие корню в массив root
+    // добволяются солова соответствующие корню в массив root
     for (let obj of wordsWithRootAsKeyNEW) {
       const foundObj = uniqueWordsNEW.find(o => o.root === obj.root);
       foundObj
         ? foundObj[objectValue[0]].push(...obj[objectValue[0]])
         : uniqueWordsNEW.push(obj);
     }
-  //удаляются дубли слов из массива root
+    //удаляются дубли слов из массива root
     uniqueWordsNEW.forEach(obj => {
       obj[objectValue[0]] = [...new Set(obj[objectValue[0]])].sort(
         (a, b) => a.length - b.length
       );
     });
-  // добавляются фразы в массив в которые входит текущее слово 
+    // добавляются фразы в массив в которые входит текущее слово
     uniqueWordsNEW.forEach(uniqueWordsNEWItem => {
       return uniqueWordsNEWItem[objectValue[0]].forEach(word => {
         list.forEach(listItem => {
+          //Удаляет спецсимволы из строки
+          const deleteSpecSymbols = word.replace(/[^a-zA-Z0-9]/g, '');
           let strToObj = new Set(
             listItem[objectValue[0]].split(' ')
             // listItem[objectValue[0]].split(/[^\u0400-\u04ff]+/)
-            );
+          );
+          // console.log(word)
           if (
             Boolean(
               strToObj.has(word) ||
-                listItem[objectValue[0]].match(new RegExp(`\\b${word}\\bgi`))
+                listItem[objectValue[0]].match(new RegExp(`\\b${deleteSpecSymbols}\\bgi`))
             )
           ) {
-           return uniqueWordsNEWItem.phrases.push(listItem);
+            return uniqueWordsNEWItem.phrases.push(listItem);
           }
         });
       });
     });
-  
-  // удаляются дубликаты из массива фраз
-  
+
+    // удаляются дубликаты из массива фраз
+
     uniqueWordsNEW.forEach(obj => {
       obj.phrases = [...new Set(obj.phrases)];
     });
-    
-  // суммируется частота фраз к словам который входият в эти фразы
+
+    // суммируется частота фраз к словам который входият в эти фразы
     uniqueWordsNEW.forEach(obj => {
       obj.phrases.forEach(phraseObj => {
         obj[objectValue[1]] += phraseObj[objectValue[1]];
         obj[objectValue[2]] += phraseObj[objectValue[2]];
         obj[objectValue[3]] += phraseObj[objectValue[3]];
-      })
-    })
-    setResultArrayOfWords(uniqueWordsNEW)
+      });
+    });
+    setResultArrayOfWords(uniqueWordsNEW);
     // eslint-disable-next-line
-  },[list])
+  }, [list]);
   //
 
   const render = () => {
     return resultArrayOfWords.map(item => {
       if (
-        JSON.stringify(item[objectValue[0]])
+        item.root.length && JSON.stringify(item[objectValue[0]])
           .toLocaleLowerCase()
           .includes(filter.toLocaleLowerCase())
       ) {
@@ -124,9 +127,15 @@ export const WordsList = () => {
               />
             </td>
             <td className={styles.tableСell1}>{item[objectValue[0]][0]}</td>
-            {!isNaN(item[objectValue[1]]) && <td className={styles.tableСell2}>{item[objectValue[1]]}</td>}
-            {!isNaN(item[objectValue[2]]) && <td className={styles.tableСell2}>{item[objectValue[2]]}</td>}
-            {!isNaN(item[objectValue[3]]) && <td className={styles.tableСell2}>{item[objectValue[3]]}</td>}
+            {!isNaN(item[objectValue[1]]) && (
+              <td className={styles.tableСell2}>{item[objectValue[1]]}</td>
+            )}
+            {!isNaN(item[objectValue[2]]) && (
+              <td className={styles.tableСell2}>{item[objectValue[2]]}</td>
+            )}
+            {!isNaN(item[objectValue[3]]) && (
+              <td className={styles.tableСell2}>{item[objectValue[3]]}</td>
+            )}
           </tr>
         );
       }
@@ -146,15 +155,21 @@ export const WordsList = () => {
               <td className={styles.tableСell1}>
                 <b>{objectValue[0]}</b>
               </td>
-              {objectValue[0] && <td className={styles.tableСell2}>
-                <b>{objectValue[1]}</b>
-              </td>}
-              {objectValue[2] && <td className={styles.tableСell2}>
-                <b>{objectValue[2]}</b>
-              </td>}
-              {objectValue[3] && <td className={styles.tableСell2}>
-                <b>{objectValue[3]}</b>
-              </td>}
+              {objectValue[0] && (
+                <td className={styles.tableСell2}>
+                  <b>{objectValue[1]}</b>
+                </td>
+              )}
+              {objectValue[2] && (
+                <td className={styles.tableСell2}>
+                  <b>{objectValue[2]}</b>
+                </td>
+              )}
+              {objectValue[3] && (
+                <td className={styles.tableСell2}>
+                  <b>{objectValue[3]}</b>
+                </td>
+              )}
             </tr>
           </thead>
           {resultArrayOfWords.length > 0 && <tbody>{render()}</tbody>}
